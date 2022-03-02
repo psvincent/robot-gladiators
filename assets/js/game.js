@@ -27,10 +27,23 @@ var enemyHealth = 50;
 var enemyAttack = 12;
 
 var fight = function(enemyName) {
-  // Alerts the player that they are starting the round.
-  window.alert("Welcome to Robot Gladiators!");
+  // This is a while loop which is telling the fight function to execute as long as the enemy robot and the player robot is still alive.  The && operator means that both conditions must be true.  This differs from the || operator which means either operator could be true.
+  while(playerHealth > 0 && enemyHealth > 0) {
   // This prompt asks the player if they want to fight or skip ther battle
   var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+  // If player picks "skip" confirm and then stop the loop
+  if (promptFight === "skip" || promptFight === "SKIP") {
+    // confirm player wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+    // If yes (true), leave fight
+    if (confirmSkip) {
+      window.alert(playerName + ' has decided to skip this fight. Goodbye!');
+      // Subtract money from playerMoney for skipping 
+      playerMoney = playerMoney - 2;
+      console.log("playerMoney", playerMoney);
+      break;
+    }
+  }
   // If player chooses to fight, then fight.
   if (promptFight === "fight" || promptFight === "FIGHT") {
   //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
@@ -42,6 +55,10 @@ var fight = function(enemyName) {
   // Check enemy's health
   if (enemyHealth <= 0) {
       window.alert(enemyName + " has died!");
+      // award player money for winning
+      playerMoney = playerMoney + 20;
+      // This break prevents the enemy robot to still do damage after being defeated
+      break;
   }
   else {
       window.alert(enemyName + " still has " + enemyHealth + " health left.");
@@ -55,31 +72,27 @@ var fight = function(enemyName) {
   // Check player's health
   if (playerHealth <= 0) {
       window.alert(playerName + " has died");
+      break;
   } else {
       window.alert(playerName + " still has " + playerHealth + " health left.");
-  }
-  // If player chooses to skip
-} else if (promptFight === "skip" || promptFight === "SKIP") {
-  // Confirm player wants to skip
-  var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-  // If yes (true), leave fight.
-  if (confirmSkip) {
-      window.alert(playerName + " has decided to skip this fight. Goodbye!");
-  // subtract money from playerMoney for skipping
-  playerMoney = playerMoney - 2;    
-  }
-  // If no (false), ask question again by running fight() again.
-  else {
-      fight();
-  }
-    window.alert(playerName + " has chosen to skip the fight!");
-} else {
-    window.alert("You need to choose a valid option. Try again!");
+}
+}
 }
 };
 
 for(var i = 0; i < enemyNames.length; i++) {
-  fight(enemyNames[i]);
+  // This if statement says if the players health is still above 0, then continue the fight.  The i + 1 shows the round you are on. since i initially is 0 due to the arrays first element being 0, then if you add one to it, the round counter will start at one.
+  if (playerHealth > 0) {
+    window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+  } else {
+    window.alert("You have lost your robot in battle! Game Over");
+    break;
+  }
+  var pickedEnemyName = enemyNames[i];
+  // This enemyHealth = 50 makes sure that whenever a new enemy appears it's health is at 50.
+  enemyHealth = 50;
+  // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter.
+  fight(pickedEnemyName);
 }
 
 
@@ -104,7 +117,7 @@ for(var i = 0; i < enemyNames.length; i++) {
 // alert("Hello");                                       string argument
 // console.log(enemyNames[i], i);                        two arguments, comma-separated
 // for(var i = 0; i < enemyNames.length; i++) {
-// fight(enemyNames[i]);                                 This puts an argument in a for loop but it also puts an argument inside a function which is basically saying run this function until i gets to the end of the enemyNames length.
+// fight(enemyNames[i]);                                 This puts an argument inside a function which is basically saying run this function until i gets to the end of the enemyNames length.
 // }
 
 
