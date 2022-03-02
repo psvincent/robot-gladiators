@@ -1,16 +1,32 @@
+// Game States
+// "WIN" - Player robot has defeated all enemy robots
+// * Fight all enemy-robots
+// * Defeat each enemy-robot
+// "LOSE" - Player robot's health is zero or less
+
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
 // You can also log multiple values at once like this
-console.log(playerName, playerAttack, playerHealth);
+// This displays the playerName that the player enters, how much damage the player does, and the health in the console.
+// console.log(playerName, playerAttack, playerHealth);
 
-var enemyName = "Roborto";
+// The enemy Names are an array since there are multiple enemies.
+var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
+// This displays how many elements are in the array as well as the whole array of the enemies and lists them all seperately the first one starting with 0.
+// console.log(enemyNames);
+// This for loop prints the enemy names in the console as well as the number it is in the array.  It also prints the enemy's name then "is at" then the number it is in the array then "index".
+// for (var i = 0; i < enemyNames.length; i++) {
+// console.log(enemyNames[i]);
+// console.log(i)
+// console.log(enemyNames[i] + " is at " + i + " index");
+// }
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-var fight = function() {
+var fight = function(enemyName) {
   // Alerts the player that they are starting the round.
   window.alert("Welcome to Robot Gladiators!");
   // This prompt asks the player if they want to fight or skip ther battle
@@ -62,7 +78,9 @@ var fight = function() {
 }
 };
 
-fight();
+for(var i = 0; i < enemyNames.length; i++) {
+  fight(enemyNames[i]);
+}
 
 
 
@@ -79,6 +97,15 @@ fight();
 
 
 
+
+
+// The stuff inside the parentheses is called an argument.
+// console.log(enemyNames);                              array argument
+// alert("Hello");                                       string argument
+// console.log(enemyNames[i], i);                        two arguments, comma-separated
+// for(var i = 0; i < enemyNames.length; i++) {
+// fight(enemyNames[i]);                                 This puts an argument in a for loop but it also puts an argument inside a function which is basically saying run this function until i gets to the end of the enemyNames length.
+// }
 
 
 // These are two ways you can make a function
