@@ -4,6 +4,11 @@
 // * Defeat each enemy-robot
 // "LOSE" - Player robot's health is zero or less
 
+// Play again and Shop features
+// Wrap the game  logic in a startGame() function.
+// When the player is defeated or there are no more enemies, call an endGame() function that alerts the player's total stats, asks the player if they want to play again, and if yes call startGame() to restart the game.
+// After the player skips or defeats an enemy (and there are still more robots to fight) then Ask the player if they want to "shop", If no continue as normal, If yes call the shop() function, In the shop() function, ask player if they want to "refill" health "upgrade" attack or "leave" the shop, If refill subtract money points from player and increase health, If upgrade subtract money points from player and increase attack power, If leave alert goodbye and exit the function, If any other invalid option call shop() again.
+ 
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
 var playerAttack = 10;
@@ -71,7 +76,7 @@ var fight = function(enemyName) {
   );
   // Check player's health
   if (playerHealth <= 0) {
-      window.alert(playerName + " has died");
+      window.alert(playerName + " has died.. GAME OVER");
       break;
   } else {
       window.alert(playerName + " still has " + playerHealth + " health left.");
