@@ -12,7 +12,7 @@
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
 var playerAttack = 10;
-var playerMoney = 10;
+var playerMoney = 20;
 
 // You can also log multiple values at once like this
 // This displays the playerName that the player enters, how much damage the player does, and the health in the console.
@@ -104,6 +104,15 @@ for(var i = 0; i < enemyNames.length; i++) {
   enemyHealth = 50;
   // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter.
   fight(pickedEnemyName);
+  // If you are not at the last enemy in the array  and the player is still alive you will get the option to open the shop.  This will ensure that shop() is called after every fight but only if the loop iterator, i, still has room to increment.
+  if (playerHealth > 0 && i < enemyNames.length - 1) {
+    // Ask the player if they want to use the shop before their next round.
+    var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+    // If yes, take them to the store() function
+    if (storeConfirm) {
+    shop();
+    }
+  }
 }
 // after the loop ends, player is either out of health or enemies to fight, so run the endGame function.
 endGame();
@@ -128,6 +137,50 @@ if (playAgainConfirm) {
 }
 };
 
+var shop = function() {
+  // Ask the player what they would like to do.
+  var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+  // Logic behind what the player chooses whether it be refill, upgrade, or leave using switch instead of if.
+  switch (shopOptionPrompt) {
+    // If they choose refill show alert to refill health by 20 for 7 dollars.
+    case "refill":
+    case "REFILL":
+      // Check if player has enough money.
+      if (playerMoney >= 7 ) {
+      window.alert("Refilling player's health by 20 for 7 dollars.");
+      // Increase player health by 20 and decrease playerMoney by 7.
+      playerHealth = playerHealth + 20;
+      playerMoney = playerMoney - 7;
+      } else {
+        window.alert("You don't have enough money!");
+      }
+      break;
+      // If they choose upgrade, upgrade player's attack by 6 for 7 dollars.
+      case "upgrade":
+      case "UPGRADE": 
+      if (playerMoney >= 7) {
+      window.alert("Upgrading player's attack by 6 for 7 dollars.");
+      // Increase player attack by 6 and decrease player money by 7.
+      playerAttack = playerAttack + 6;
+      playerMoney = playerMoney - 7;
+      } else {
+        window.alert("You don't have enough money!");
+      }
+      break;
+      case "leave":
+      case "LEAVE":
+        window.alert("Leaving the store.");
+        // Do nothing so function will end.
+        break;
+        // default is when the player chooses an invalid option so anything by refill, upgrade, or leave.
+        default: 
+        window.alert("You did not pick a valid option. Try again.");
+        // Call skop again to force player to pick a valid option.
+        shop();
+        break;
+  }
+};
+
 // This starts the gamer initially but does not restart it if the player wants to play again.
 startGame();
 
@@ -147,6 +200,37 @@ startGame();
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Basic example of a switch statement (An alternative to if statements).  Use switch tatements when checking a single value against multiple possibilities, or cases. In this example, we're defining what should happen when the variable num equals 1, 2, 3, or something else (the default case). Each case ends with a break to specify that nothing more should happen. In the previous example, "the variable was something else" will print because num was 5. 
+// var num = 5;
+
+// switch(num) {
+//   case 1:
+//     console.log("the variable was 1");
+//     break;
+//   case 2:
+//     console.log("the variable was 2");
+//     break;
+//   case 3:
+//     console.log("the variable was 3");
+//     break;
+//   default:
+//     console.log("the variable was something else");
+//     break;
+// }
 
 
 // Difference between function declaration (Calling a function without giving it a variable keyword) and function expression (Calling a function with a variable keyword).
