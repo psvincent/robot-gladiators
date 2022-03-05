@@ -85,6 +85,12 @@ var fight = function(enemyName) {
 }
 };
 
+// Function to start a new game
+var startGame = function() {
+  // This resets the player's stats after every game played.
+  playerHealth = 100;
+  playerAttack = 10;
+  playerMoney = 10;
 for(var i = 0; i < enemyNames.length; i++) {
   // This if statement says if the players health is still above 0, then continue the fight.  The i + 1 shows the round you are on. since i initially is 0 due to the arrays first element being 0, then if you add one to it, the round counter will start at one.
   if (playerHealth > 0) {
@@ -99,6 +105,31 @@ for(var i = 0; i < enemyNames.length; i++) {
   // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter.
   fight(pickedEnemyName);
 }
+// after the loop ends, player is either out of health or enemies to fight, so run the endGame function.
+endGame();
+};
+
+// This function ends the entire game
+var endGame = function() {
+  window.alert("The game has now ended. Let's see how you did!");
+// This says if the player is still alive, the player wins.
+if (playerHealth > 0) {
+  window.alert("Great job, you've survived the game! You now have a score of " + playerMoney + ".");
+} else {
+  window.alert("You've lost your robot in battle.");
+}
+// This asks the player if they want to play again.
+var playAgainConfirm = window.confirm("Would you like to play again?");
+if (playAgainConfirm) {
+  // restart the game
+  startGame();
+} else {
+  window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+}
+};
+
+// This starts the gamer initially but does not restart it if the player wants to play again.
+startGame();
 
 
 
@@ -115,6 +146,34 @@ for(var i = 0; i < enemyNames.length; i++) {
 
 
 
+
+
+
+// Difference between function declaration (Calling a function without giving it a variable keyword) and function expression (Calling a function with a variable keyword).
+
+// Function Declaration
+// add(5,6);  // This will log 11
+// function add(a,b) {
+// console.log(a+b);
+// }
+
+// Function Expression
+// add (5,6);  // Gives you an error 
+// var add = function(a,b) {
+// console.log(a+b);
+// }
+
+// var a is a global variable and variable b is a local variable inside the function logStuff.
+// var a = "a";
+
+// var logStuff = function() {
+// var b = "b";
+// console.log(a);
+// console.log(b);
+// };
+
+// console.log(a);
+// console.log(b); // error
 
 
 // The stuff inside the parentheses is called an argument.
