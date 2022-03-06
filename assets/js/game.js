@@ -31,6 +31,12 @@ var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+// This function generates a random numeric value between min and max and returns the variable value which is between min and max. This allows the variable randomNumber to have different values throughout the file.
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+  return value;
+}
+
 var fight = function(enemyName) {
   // This is a while loop which is telling the fight function to execute as long as the enemy robot and the player robot is still alive.  The && operator means that both conditions must be true.  This differs from the || operator which means either operator could be true.
   while(playerHealth > 0 && enemyHealth > 0) {
@@ -43,16 +49,18 @@ var fight = function(enemyName) {
     // If yes (true), leave fight
     if (confirmSkip) {
       window.alert(playerName + ' has decided to skip this fight. Goodbye!');
-      // Subtract money from playerMoney for skipping 
-      playerMoney = playerMoney - 2;
+      // Subtract money from playerMoney for skipping.  The Math.max is to make sure the value of the player's money doesn't go below 0.  Could also use an if statement like if (playerMoney < 0) { playerMoney = 0;}
+      playerMoney = Math.max(0, playerMoney - 2);
       console.log("playerMoney", playerMoney);
       break;
     }
   }
   // If player chooses to fight, then fight.
   if (promptFight === "fight" || promptFight === "FIGHT") {
-  //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
-  enemyHealth = enemyHealth - playerAttack;
+    // This generates a random damage value based on the player's attack power.
+    var damage = randomNumber(playerAttack - 3, playerAttack);
+  //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable.  The Math.max is to make sure the enemy health stays at 0 even if it goes below.
+  enemyHealth = Math.max(0, enemyHealth - damage);
   // Log a resulting message to the console so we know that it worked.
   console.log(
     playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
@@ -68,8 +76,10 @@ var fight = function(enemyName) {
   else {
       window.alert(enemyName + " still has " + enemyHealth + " health left.");
   }
-  // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
-  playerHealth = playerHealth - enemyAttack;
+  // This generates a random damage value based on the enemy's attack power.
+  var damage = randomNumber(enemyAttack - 3, enemyAttack);
+  // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.  The Math.max is to make sure the playerHealth stays at 0 even if it goes below.
+  playerHealth = Math.max(0, playerHealth - damage);
   // Log a resulting message to the console so we know that it worked.
   console.log(
     enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
@@ -100,8 +110,8 @@ for(var i = 0; i < enemyNames.length; i++) {
     break;
   }
   var pickedEnemyName = enemyNames[i];
-  // This enemyHealth = 50 makes sure that whenever a new enemy appears it's health is at 50.
-  enemyHealth = 50;
+  // This enemyHealth = randomNumber makes sure that whenever a new enemy appears it's health is at a number between 40 and 60.
+  enemyHealth = randomNumber(40, 60);
   // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter.
   fight(pickedEnemyName);
   // If you are not at the last enemy in the array  and the player is still alive you will get the option to open the shop.  This will ensure that shop() is called after every fight but only if the loop iterator, i, still has room to increment.
@@ -212,6 +222,29 @@ startGame();
 
 
 
+
+
+
+
+
+// The built-in object called math is like prompt() and alert() so it is a property of the window object but you do not need to write window.Math.
+// The Math object has many properties and functions attached to it.  When a function belongs to an object, we refer to it as a method.
+// console.log(Math.PI);
+// Prints 3.141592653589793
+
+// console.log(Math.round(4.4));
+// Rounds to the nearest whole number (4)
+
+// console.log(Math.sqrt(25));
+// Prints the square root of 25 so 5.
+
+// console.log(Math.max(10, 20, 100));
+// Prints 100 since it is the largest number out of 10, 20, and 100.
+
+// console.log(Math.max(0, -50));
+// Prints 0 since 0 is larger than -50.
+
+// The Math.random() method returns a random decimal number between 0 and 1 but not including 1. For this decimal to be useful, we have to pair it with other math operations like Math.floor.
 
 
 // Basic example of a switch statement (An alternative to if statements).  Use switch tatements when checking a single value against multiple possibilities, or cases. In this example, we're defining what should happen when the variable num equals 1, 2, 3, or something else (the default case). Each case ends with a break to specify that nothing more should happen. In the previous example, "the variable was something else" will print because num was 5. 
