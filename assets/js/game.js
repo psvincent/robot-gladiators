@@ -34,26 +34,36 @@ var randomNumber = function(min, max) {
   return value;
 }
 
+var fightOrSkip = function() {
+  // ask player if they'd like to fight or skip using fightOrSkip function
+  var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+
+  if (promptFight === "" || promptFight === null) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return fightOrSkip();
+  }
+
+  // if player picks "skip" confirm and then stop the loop
+  if (promptFight === "skip" || promptFight === "SKIP") {
+    // confirm player wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+    // if yes (true), leave fight
+    if (confirmSkip) {
+      window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+      // subtract money from playerMoney for skipping
+      playerInfo.playerMoney = playerInfo.money - 10;
+      shop();
+    }
+  }
+}
+
 var fight = function(enemy) {
   // This is a while loop which is telling the fight function to execute as long as the enemy robot and the player robot is still alive.  The && operator means that both conditions must be true.  This differs from the || operator which means either operator could be true.
   while(playerInfo.health > 0 && enemy.health > 0) {
   // This prompt asks the player if they want to fight or skip ther battle
-  var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-  // If player picks "skip" confirm and then stop the loop
-  if (promptFight === "skip" || promptFight === "SKIP") {
-    // confirm player wants to skip
-    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-    // If yes (true), leave fight
-    if (confirmSkip) {
-      window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-      // Subtract money from playerInfo.money for skipping.  The Math.max is to make sure the value of the player's money doesn't go below 0.  Could also use an if statement like if (playerInfo.money < 0) { playerInfo.money = 0;}
-      playerInfo.money = Math.max(0, playerInfo.money - 2);
-      console.log("playerInfo.money", playerInfo.money);
-      break;
-    }
-  }
   // If player chooses to fight, then fight.
-  if (promptFight === "fight" || promptFight === "FIGHT") {
+  fightOrSkip(); {
     // This generates a random damage value based on the player's attack power.
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
   //Subtract the value of `playerInfo.attack` from the value of `enemy.health` and use that result to update the value in the `enemy.health` variable.  The Math.max is to make sure the enemy health stays at 0 even if it goes below.
