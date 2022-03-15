@@ -164,15 +164,27 @@ var shop = function() {
         // default is when the player chooses an invalid option so anything by refill, upgrade, or leave.
         default: 
         window.alert("You did not pick a valid option. Try again.");
-        // Call skop again to force player to pick a valid option.
+        // Call stop again to force player to pick a valid option.
         shop();
         break;
   }
 };
 
+// Function to set name
+var getPlayerName = function() {
+  var name = "";
+  // This makes the player not be able to leave their name blank.
+  while (name === "" || name === null) {
+    name = prompt("What is your robot's name?");
+  }
+  console.log("Your robot's name is " + name);
+  return name;
+};
+
 // This playerInfo is a custom object containing all the properties of the player.
 var playerInfo = {
-  name: window.prompt("What is your robot's name?"),
+  // This calls the getPlayerName function to allow the player to not have an empty name.
+  name: getPlayerName(),
   health: 100,
   attack: 10,
   money: 10,
